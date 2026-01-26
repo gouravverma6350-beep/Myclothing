@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MyClothing | Online Fashion Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{margin:0;font-family:Arial;background:#f1f3f6}
+header{background:#2874f0;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:20px}
+nav a{color:#fff;margin-left:15px;text-decoration:none;font-size:14px}
+
+.search{padding:10px;background:#fff}
+.search input{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px}
+
+.banner{background:#ffe11b;padding:40px;text-align:center;font-size:24px;font-weight:bold}
+
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;padding:15px}
+.card{background:#fff;padding:10px;border-radius:6px;text-align:center}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:4px}
+.card h3{font-size:16px;margin:8px 0}
+.card p{margin:5px 0;font-weight:bold}
+.card button{background:#25d366;color:#fff;border:none;padding:8px;width:100%;border-radius:4px;font-size:14px;cursor:pointer}
+
+footer{background:#172337;color:#fff;text-align:center;padding:15px;font-size:13px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>MyClothing</h1>
+<nav>
+<a href="#">Home</a>
+<a href="#">Products</a>
+<a href="#">Cart</a>
+</nav>
+</header>
+
+<div class="search">
+<input type="text" placeholder="Search for products...">
+</div>
+
+<div class="banner">
+BIG SALE 🔥 Flat 50% OFF
+</div>
+
+<div class="products">
+
+<div class="card">
+<img src="https://via.placeholder.com/300x300?text=T-Shirt">
+<h3>Men T-Shirt</h3>
+<p>₹499</p>
+<button onclick="order('Men T-Shirt - ₹499')">Order on WhatsApp</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/300x300?text=Jeans">
+<h3>Blue Jeans</h3>
+<p>₹999</p>
+<button onclick="order('Blue Jeans - ₹999')">Order on WhatsApp</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/300x300?text=Shirt">
+<h3>Formal Shirt</h3>
+<p>₹799</p>
+<button onclick="order('Formal Shirt - ₹799')">Order on WhatsApp</button>
+</div>
+
+</div>
+
+<footer>
+© 2026 MyClothing.com | All Rights Reserved
+</footer>
+
+<script>
+function order(product){
+  let phone = "916350390399"; // ✅ WhatsApp number added
+  let msg = "Hello, I want to order: " + product;
+  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
+}
+</script>
+
+</body>
+</html>
