@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>myclothing.com | Premium Fashion Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style>
+body{margin:0;font-family:Arial;background:#f6f6f6}
+header{background:#000;color:#fff;padding:15px;display:flex;justify-content:space-between;align-items:center}
+nav a{color:#fff;margin:0 10px;text-decoration:none}
+.hero{background:linear-gradient(#000,#333);color:#fff;padding:80px 20px;text-align:center}
+.hero button{padding:12px 25px;border:none;background:#fff;font-weight:bold;cursor:pointer}
+.section{padding:40px 20px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,250px);gap:20px;justify-content:center}
+.product{background:#fff;padding:20px;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,.1);text-align:center}
+.product button{background:#000;color:#fff;border:none;padding:10px 15px;cursor:pointer}
+#cartBox{background:#fff;padding:20px;border-radius:10px;max-width:500px;margin:auto}
+.btn{background:#000;color:#fff;padding:12px 20px;border:none;cursor:pointer;margin:5px}
+footer{background:#000;color:#fff;text-align:center;padding:15px;margin-top:40px}
+.trust{display:flex;justify-content:space-around;background:#fff;padding:15px;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>myclothing.com</h2>
+<nav>
+<a href="#shop">Shop</a>
+<a href="#cart">Cart 🛒</a>
+<a href="#checkout">Checkout</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>Upgrade Your Style</h1>
+<p>Premium Fashion Delivered To Your Door</p>
+<button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+</section>
+
+<div class="trust">
+<div>🚚 Fast Delivery</div>
+<div>🔒 Secure Payment</div>
+<div>↩ Easy Returns</div>
+</div>
+
+<section class="section" id="shop">
+<h2 align="center">Shop Collection</h2>
+<div class="products">
+<div class="product">
+<h3>T-Shirt</h3>
+<p>₹999</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="product">
+<h3>Jeans</h3>
+<p>₹1999</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="product">
+<h3>Dress</h3>
+<p>₹2499</p>
+<button>Add to Cart</button>
+</div>
+</div>
+</section>
+
+<footer>
+<p>© 2026 myclothing.com | All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
