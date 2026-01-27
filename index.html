@@ -3,110 +3,202 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>MyClothing | Online Fashion Store</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>MyClothing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#f6f6f6}
-header{background:#2874f0;color:#fff;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000}
-header h1{margin:0;font-size:22px;font-weight:bold;cursor:pointer}
-nav a{color:#fff;margin-left:15px;text-decoration:none;font-size:14px}
-nav a:hover{text-decoration:underline}
-
-.search{padding:15px;background:#fff;display:flex;justify-content:center}
-.search input{width:100%;max-width:500px;padding:10px;border:1px solid #ccc;border-radius:5px;font-size:14px}
-
-.banner{background:linear-gradient(90deg,#ffe11b,#f0b400);padding:50px;text-align:center;font-size:26px;font-weight:bold;color:#000;cursor:pointer;transition:0.3s}
-.banner:hover{opacity:0.9}
-
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;padding:15px}
-
-.card{background:#fff;padding:12px;border-radius:8px;text-align:center;transition:0.3s;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-.card:hover{transform:scale(1.05);box-shadow:0 6px 15px rgba(0,0,0,0.2);}
-
-.card img{width:100%;height:180px;object-fit:cover;border-radius:6px}
-.card h3{font-size:16px;margin:8px 0}
-.card p{margin:5px 0;font-weight:bold;color:#2874f0;font-size:15px}
-.card button{background:#25d366;color:#fff;border:none;padding:8px;width:100%;border-radius:5px;font-size:14px;cursor:pointer;transition:0.3s}
-.card button:hover{background:#128c7e}
-
-footer{background:#172337;color:#fff;text-align:center;padding:15px;font-size:13px;margin-top:20px}
+body{margin:0;font-family:Arial;background:#f1f3f6}
+.header{background:#2874f0;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.header div{flex:1}
+.search{background:#fff;border-radius:5px;padding:8px;margin-top:8px}
+.search input{border:none;width:100%;outline:none}
+.categories{display:flex;overflow-x:auto;background:#fff;padding:10px 0;margin-top:5px;gap:10px}
+.cat{text-align:center;font-size:12px;cursor:pointer;flex:0 0 auto;padding:5px 10px;border-radius:20px;border:1px solid #ccc}
+.cat.active{background:#2874f0;color:#fff;border:none}
+.banner{margin:10px;overflow:hidden;position:relative;border-radius:10px}
+.banner img{width:100%;display:block}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
+.card{background:#fff;border-radius:10px;padding:10px;position:relative}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
+.price{color:green;font-weight:bold}
+.btn{background:#25D366;color:#fff;padding:8px;text-align:center;border-radius:6px;margin-top:6px;text-decoration:none;display:block}
+h3{padding:0 10px;margin-bottom:5px}
+.admin{background:#fff;margin:10px;padding:10px;border-radius:10px;display:none}
+.admin input,select{width:100%;padding:8px;margin:5px 0}
+.admin button{background:#2874f0;color:#fff;border:none;padding:10px;width:100%;border-radius:6px;cursor:pointer}
+.bottom-nav{position:fixed;bottom:0;width:100%;display:flex;justify-content:space-around;background:#fff;padding:10px 0;border-top:1px solid #ccc;z-index:100}
+.nav-item{text-align:center;font-size:12px;cursor:pointer;color:#555}
+.nav-item.active{color:#2874f0;font-weight:bold}
+.cart-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:999}
+.cart-content{background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;max-height:80%;overflow:auto}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:10px}
+.cart-item span{margin:0 5px}
+.close-cart{background:red;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-bottom:10px}
 </style>
 </head>
 <body>
 
-<header>
-<h1>MyClothing</h1>
-<nav>
-<a href="#">Home</a>
-<a href="#">Products</a>
-<a href="#">Cart</a>
-</nav>
-</header>
-
-<div class="search">
-<input type="text" id="searchBox" placeholder="Search for products...">
+<div class="header">
+  <div>📍 Jaipur 303805</div>
+  <div class="search"><input placeholder="Search for products" id="searchInput"></div>
+  <div><button onclick="adminLogin()">Admin</button></div>
 </div>
 
-<div class="banner">
-BIG SALE 🔥 Flat 50% OFF
+<div class="categories" id="categoryBar">
+  <div class="cat active" onclick="filterCategory('All')">All</div>
+  <div class="cat" onclick="filterCategory('Men')">👕 Men</div>
+  <div class="cat" onclick="filterCategory('Women')">👗 Women</div>
 </div>
 
-<div class="products" id="productsContainer">
-<!-- Products will be generated here -->
+<div class="banner" id="banner">
+  <img src="https://i.imgur.com/3Y1ZK6N.jpg">
+  <img src="https://i.imgur.com/2XH4qOu.jpg" style="display:none">
+  <img src="https://i.imgur.com/QlRphfQ.jpg" style="display:none">
 </div>
 
-<footer>
-© 2026 MyClothing.com | All Rights Reserved
-</footer>
+<!-- ADMIN PANEL -->
+<div class="admin" id="adminPanel">
+  <h3>Add Product (Admin)</h3>
+  <input id="name" placeholder="Product Name">
+  <input id="price" placeholder="Price">
+  <input id="image" placeholder="Image URL">
+  <select id="category">
+    <option>Men</option>
+    <option>Women</option>
+  </select>
+  <button onclick="addProduct()">Add Product</button>
+</div>
+
+<h3 style="padding:0 10px">Products</h3>
+<div class="products" id="products"></div>
+
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="showHome()">Home</div>
+  <div class="nav-item" onclick="filterCategory('Men')">Men</div>
+  <div class="nav-item" onclick="filterCategory('Women')">Women</div>
+  <div class="nav-item" onclick="openCart()">Cart</div>
+  <div class="nav-item">Account</div>
+</div>
+
+<!-- CART POPUP -->
+<div class="cart-popup" id="cartPopup">
+  <div class="cart-content">
+    <button class="close-cart" onclick="closeCart()">Close</button>
+    <h3>Cart</h3>
+    <div id="cartItems"></div>
+    <h4 id="cartTotal"></h4>
+  </div>
+</div>
 
 <script>
-// ✅ Your WhatsApp number
-const phoneNumber = "916350390399";
+const number = "916350390399";
+const adminPassword = "admin123";
+let products = JSON.parse(localStorage.getItem("products")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let filtered = "All";
 
-// Dynamic product list
-const productsList = [
-  {name:"Men T-Shirt", price:499, img:"https://via.placeholder.com/300x300?text=T-Shirt"},
-  {name:"Blue Jeans", price:999, img:"https://via.placeholder.com/300x300?text=Jeans"},
-  {name:"Formal Shirt", price:799, img:"https://via.placeholder.com/300x300?text=Shirt"},
-  {name:"Sneakers", price:1299, img:"https://via.placeholder.com/300x300?text=Sneakers"},
-  {name:"Jacket", price:1999, img:"https://via.placeholder.com/300x300?text=Jacket"},
-  {name:"Cap", price:299, img:"https://via.placeholder.com/300x300?text=Cap"}
-];
+// Banner slider
+const bannerImgs = document.querySelectorAll("#banner img");
+let currentBanner = 0;
+setInterval(()=> {
+  bannerImgs.forEach((img,i)=> img.style.display = i===currentBanner?"block":"none");
+  currentBanner = (currentBanner+1)%bannerImgs.length;
+},3000);
 
-// Function to render products
-function renderProducts(list){
-  const container = document.getElementById("productsContainer");
-  container.innerHTML = "";
-  list.forEach(product=>{
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${product.img}">
-      <h3>${product.name}</h3>
-      <p>₹${product.price}</p>
-      <button onclick="orderProduct('${product.name} - ₹${product.price}')">Order on WhatsApp</button>
-    `;
-    container.appendChild(card);
+// Add product
+function addProduct(){
+  const p = {name:name.value, price:price.value, image:image.value, category:category.value};
+  products.push(p);
+  localStorage.setItem("products",JSON.stringify(products));
+  showProducts();
+  name.value=""; price.value=""; image.value="";
+}
+
+// Show products
+function showProducts(){
+  const productsDiv = document.getElementById("products");
+  productsDiv.innerHTML="";
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+  let list = products.filter(p=> (filtered=="All" || p.category==filtered) && p.name.toLowerCase().includes(searchTerm));
+  list.forEach((p,i)=>{
+    productsDiv.innerHTML += `
+    <div class="card">
+      <img src="${p.image}">
+      <h4>${p.name}</h4>
+      <div class="price">₹${p.price}</div>
+      <a class="btn" href="https://wa.me/${number}?text=I want ${p.name} ₹${p.price}">Order on WhatsApp</a>
+      <button onclick="addToCart(${i})" style="margin-top:5px;width:100%;padding:5px;border:none;background:#2874f0;color:white;border-radius:5px;cursor:pointer">Add to Cart</button>
+    </div>`;
   });
 }
 
-// WhatsApp order function
-function orderProduct(product){
-  const msg = `Hello, I want to order: ${product}`;
-  window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`);
+// Filter category
+function filterCategory(cat){
+  filtered = cat;
+  document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
+  document.querySelectorAll(".cat").forEach(c=>{if(c.innerText.includes(cat)||cat=="All") c.classList.add("active")});
+  showProducts();
 }
 
-// Search functionality
-document.getElementById("searchBox").addEventListener("input", e=>{
-  const value = e.target.value.toLowerCase();
-  const filtered = productsList.filter(p=>p.name.toLowerCase().includes(value));
-  renderProducts(filtered);
-});
+// Admin login
+function adminLogin(){
+  let pass = prompt("Enter admin password:");
+  if(pass===adminPassword){
+    document.getElementById("adminPanel").style.display="block";
+    alert("Welcome Admin");
+  } else { alert("Wrong password"); }
+}
 
-// Initial render
-renderProducts(productsList);
+// Search
+document.getElementById("searchInput").addEventListener("input",showProducts);
+
+// Cart functions
+function addToCart(index){
+  cart.push(products[index]);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  alert("Product added to cart");
+}
+
+function openCart(){
+  document.getElementById("cartPopup").style.display="flex";
+  updateCart();
+}
+
+function closeCart(){
+  document.getElementById("cartPopup").style.display="none";
+}
+
+function updateCart(){
+  const cartDiv = document.getElementById("cartItems");
+  const totalDiv = document.getElementById("cartTotal");
+  cartDiv.innerHTML="";
+  let total=0;
+  cart.forEach((p,i)=>{
+    total+=Number(p.price);
+    cartDiv.innerHTML += `<div class="cart-item">
+      <span>${p.name}</span>
+      <span>₹${p.price}</span>
+      <button onclick="removeCart(${i})">X</button>
+    </div>`;
+  });
+  totalDiv.innerText="Total: ₹"+total;
+}
+
+function removeCart(index){
+  cart.splice(index,1);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  updateCart();
+}
+
+// Home nav
+function showHome(){
+  filtered="All";
+  document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
+  document.querySelectorAll(".cat")[0].classList.add("active");
+  showProducts();
+}
+
+showProducts();
 </script>
 
 </body>
-  </html>
+</html>
