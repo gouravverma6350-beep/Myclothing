@@ -1,202 +1,116 @@
 <!-- FORCE DEPLOY -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>MyClothing</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyClothing | Shop & Recharge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <style>
-body{margin:0;font-family:Arial;background:#f1f3f6}
-.header{background:#2874f0;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
-.header div{flex:1}
-.search{background:#fff;border-radius:5px;padding:8px;margin-top:8px;flex:2}
-.search input{border:none;width:100%;outline:none}
-.categories{display:flex;overflow-x:auto;background:#fff;padding:10px 0;margin-top:5px;gap:10px;scroll-behavior:smooth;}
-.cat{text-align:center;font-size:14px;cursor:pointer;flex:0 0 auto;padding:8px 12px;border-radius:20px;border:1px solid #ccc;white-space:nowrap;}
-.cat.active{background:#2874f0;color:#fff;border:none}
-.banner{margin:10px;overflow:hidden;position:relative;border-radius:10px}
-.banner img{width:100%;display:block}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:10px}
-.card{background:#fff;border-radius:10px;padding:10px;position:relative}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
-.price{color:green;font-weight:bold}
-.btn{background:#25D366;color:#fff;padding:8px;text-align:center;border-radius:6px;margin-top:6px;text-decoration:none;display:block}
-h3{padding:0 10px;margin-bottom:5px}
-.admin{background:#fff;margin:10px;padding:10px;border-radius:10px;display:none}
-.admin input,select{width:100%;padding:8px;margin:5px 0}
-.admin button{background:#2874f0;color:#fff;border:none;padding:10px;width:100%;border-radius:6px;cursor:pointer}
-.bottom-nav{position:fixed;bottom:0;width:100%;display:flex;justify-content:space-around;background:#fff;padding:10px 0;border-top:1px solid #ccc;z-index:100}
-.nav-item{text-align:center;font-size:12px;cursor:pointer;color:#555;flex:1}
-.nav-item.active{color:#2874f0;font-weight:bold}
-.cart-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:999}
-.cart-content{background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;max-height:80%;overflow:auto}
-.cart-item{display:flex;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap}
-.cart-item span{margin:0 5px}
-.close-cart{background:red;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-bottom:10px}
-@media(max-width:500px){.products{grid-template-columns:repeat(2,1fr)}}
+body{font-family:Arial;margin:0;background:#f2f2f2}
+header{background:#000;color:#fff;padding:15px;text-align:center}
+section{padding:15px}
+.box{background:#fff;padding:15px;border-radius:8px;margin-bottom:15px}
+input,select,button{width:100%;padding:10px;margin:6px 0}
+button{background:#000;color:#fff;border:none}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.card{background:#fff;padding:10px;border-radius:8px}
+.card img{width:100%;height:180px;object-fit:cover}
+.whatsapp{background:#25D366;margin-top:5px}
 </style>
 </head>
+
 <body>
 
-<div class="header">
-  <div>📍 Jaipur 303805</div>
-  <div class="search"><input placeholder="Search for products" id="searchInput"></div>
-  <div><button onclick="adminLogin()">Admin</button></div>
-</div>
+<header>
+<h2>MyClothing Store</h2>
+</header>
 
-<div class="categories" id="categoryBar">
-  <div class="cat active" onclick="filterCategory('All')">All</div>
-  <div class="cat" onclick="filterCategory('Men')">Men</div>
-  <div class="cat" onclick="filterCategory('Women')">Women</div>
-  <div class="cat" onclick="filterCategory('Electronics')">Electronics</div>
-</div>
+<section class="box">
+<h3>Add Product (Admin)</h3>
+<input id="pname" placeholder="Product Name">
+<input id="pprice" type="number" placeholder="Price">
+<select id="pcat">
+<option>Men</option>
+<option>Women</option>
+<option>Electronics</option>
+</select>
+<input type="file" id="pimg" accept="image/*">
+<button onclick="addProduct()">Add Product</button>
+</section>
 
-<div class="banner" id="banner">
-  <img src="https://i.imgur.com/3Y1ZK6N.jpg">
-  <img src="https://i.imgur.com/2XH4qOu.jpg" style="display:none">
-  <img src="https://i.imgur.com/QlRphfQ.jpg" style="display:none">
-</div>
+<section>
+<h3>Products</h3>
+<div class="products" id="productList"></div>
+</section>
 
-<div class="admin" id="adminPanel">
-  <h3>Add Product (Admin)</h3>
-  <input id="name" placeholder="Product Name">
-  <input id="price" placeholder="Price">
-  <input id="image" placeholder="Image URL">
-  <select id="category">
-    <option>Men</option>
-    <option>Women</option>
-    <option>Electronics</option>
-  </select>
-  <button onclick="addProduct()">Add Product</button>
-</div>
+<section class="box">
+<h3>Mobile Recharge / Bill Pay</h3>
+<input id="mobile" placeholder="Mobile / Bill Number">
+<input id="ramount" type="number" placeholder="Amount">
+<button onclick="pay('Recharge')">Pay & Submit</button>
+</section>
 
-<h3 style="padding:0 10px">Products</h3>
-<div class="products" id="products"></div>
-
-<div class="bottom-nav">
-  <div class="nav-item active" onclick="showHome()">Home</div>
-  <div class="nav-item" onclick="filterCategory('Men')">Men</div>
-  <div class="nav-item" onclick="filterCategory('Women')">Women</div>
-  <div class="nav-item" onclick="filterCategory('Electronics')">Electronics</div>
-  <div class="nav-item" onclick="openCart()">Cart</div>
-</div>
-
-<div class="cart-popup" id="cartPopup">
-  <div class="cart-content">
-    <button class="close-cart" onclick="closeCart()">Close</button>
-    <h3>Cart</h3>
-    <div id="cartItems"></div>
-    <h4 id="cartTotal"></h4>
-  </div>
-</div>
+<section class="box">
+<h3>Add Money to Wallet</h3>
+<input id="wamount" type="number" placeholder="Amount">
+<button onclick="pay('Wallet')">Add Money</button>
+</section>
 
 <script>
-const number = "916350390399";
-const adminPassword = "admin123";
-let products = JSON.parse(localStorage.getItem("products")) || [];
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let filtered = "All";
+const WHATSAPP="6350390399";
+let products=JSON.parse(localStorage.getItem("products"))||[];
 
-// Banner slider
-const bannerImgs = document.querySelectorAll("#banner img");
-let currentBanner = 0;
-setInterval(()=> {
-  bannerImgs.forEach((img,i)=> img.style.display = i===currentBanner?"block":"none");
-  currentBanner = (currentBanner+1)%bannerImgs.length;
-},3000);
-
-// Admin login
-function adminLogin(){
-  let pass = prompt("Enter admin password:");
-  if(pass===adminPassword){
-    document.getElementById("adminPanel").style.display="block";
-    alert("Welcome Admin");
-  } else { alert("Wrong password"); }
-}
-
-// Add product
-function addProduct(){
-  if(!name.value || !price.value || !image.value){ alert("Fill all fields"); return; }
-  const p = {name:name.value, price:price.value, image:image.value, category:category.value};
-  products.push(p);
-  localStorage.setItem("products",JSON.stringify(products));
-  showProducts();
-  name.value=""; price.value=""; image.value="";
-}
-
-// Show products
 function showProducts(){
-  const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML="";
-  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-  let list = products.filter(p=> (filtered=="All" || p.category==filtered) && p.name.toLowerCase().includes(searchTerm));
-  list.forEach((p,i)=>{
-    productsDiv.innerHTML += `
-    <div class="card">
-      <img src="${p.image}">
-      <h4>${p.name}</h4>
-      <div class="price">₹${p.price}</div>
-      <a class="btn" href="https://wa.me/${number}?text=I want ${p.name} ₹${p.price}">Order on WhatsApp</a>
-      <button onclick="addToCart(${i})" style="margin-top:5px;width:100%;padding:5px;border:none;background:#2874f0;color:white;border-radius:5px;cursor:pointer">Add to Cart</button>
-    </div>`;
-  });
+let list=document.getElementById("productList");
+list.innerHTML="";
+products.forEach(p=>{
+let msg=`Order Request\n${p.name}\n₹${p.price}`;
+let url=`https://wa.me/91${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+list.innerHTML+=`
+<div class="card">
+<img src="${p.image}">
+<h4>${p.name}</h4>
+<p>${p.category}</p>
+<b>₹${p.price}</b>
+<a href="${url}" target="_blank">
+<button class="whatsapp">Order on WhatsApp</button>
+</a>
+</div>`;
+});
 }
 
-// Filter category
-function filterCategory(cat){
-  filtered = cat;
-  document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
-  document.querySelectorAll(".cat").forEach(c=>{if(c.innerText.includes(cat)||cat=="All") c.classList.add("active")});
-  showProducts();
+function addProduct(){
+let reader=new FileReader();
+let img=document.getElementById("pimg").files[0];
+reader.onload=()=>{
+products.push({
+name:pname.value,
+price:pprice.value,
+category:pcat.value,
+image:reader.result
+});
+localStorage.setItem("products",JSON.stringify(products));
+showProducts();
+};
+reader.readAsDataURL(img);
 }
 
-// Search
-document.getElementById("searchInput").addEventListener("input",showProducts);
-
-// Cart functions
-function addToCart(index){
-  cart.push(products[index]);
-  localStorage.setItem("cart",JSON.stringify(cart));
-  alert("Product added to cart");
+function pay(type){
+let amt= type=="Wallet"?wamount.value:ramount.value;
+var options={
+key:"rzp_test_1234567890",
+amount:amt*100,
+currency:"INR",
+name:"MyClothing",
+description:type,
+handler:function(res){
+alert("Payment Successful");
+let msg=`Payment Success\nType:${type}\nAmount:₹${amt}\nID:${res.razorpay_payment_id}`;
+window.open("https://wa.me/91"+WHATSAPP+"?text="+encodeURIComponent(msg));
 }
-
-function openCart(){
-  document.getElementById("cartPopup").style.display="flex";
-  updateCart();
-}
-
-function closeCart(){
-  document.getElementById("cartPopup").style.display="none";
-}
-
-function updateCart(){
-  const cartDiv = document.getElementById("cartItems");
-  const totalDiv = document.getElementById("cartTotal");
-  cartDiv.innerHTML="";
-  let total=0;
-  cart.forEach((p,i)=>{
-    total+=Number(p.price);
-    cartDiv.innerHTML += `<div class="cart-item">
-      <span>${p.name}</span>
-      <span>₹${p.price}</span>
-      <button onclick="removeCart(${i})">X</button>
-    </div>`;
-  });
-  totalDiv.innerText="Total: ₹"+total;
-}
-
-function removeCart(index){
-  cart.splice(index,1);
-  localStorage.setItem("cart",JSON.stringify(cart));
-  updateCart();
-}
-
-// Home nav
-function showHome(){
-  filtered="All";
-  document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
-  document.querySelectorAll(".cat")[0].classList.add("active");
-  showProducts();
+};
+new Razorpay(options).open();
 }
 
 showProducts();
